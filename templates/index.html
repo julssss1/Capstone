@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Language Detection</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            align-items: center; /* Center everything horizontally */
+            min-height: 100vh; /* Ensure full viewport height */
+            overflow-x: hidden;  /* Prevent horizontal scrollbar */
+            padding-top: 20px; /* Add some space at the top */
+            box-sizing: border-box;
+        }
+
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 20px; /* Space below heading */
+            text-align: center;
+            font-size: 2em;
+        }
+
+        #video-container {
+            position: relative; /* Needed for absolute positioning of text overlays if added later */
+            max-width: 90%; /* Responsive width */
+            width: 640px; /* Default width, adjust if needed */
+            margin-bottom: 15px; /* Space below video */
+            border: 2px solid #34495e;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            background-color: #000; /* Black background while loading */
+            overflow: hidden; /* Keep image within rounded borders */
+        }
+
+        #video-feed {
+            display: block; /* Remove extra space below image */
+            width: 100%;    /* Fill the container */
+            height: auto;   /* Maintain aspect ratio */
+            border-radius: 6px; /* Match container rounding slightly */
+        }
+
+        #prediction-container {
+            background-color: #fff;
+            padding: 15px 25px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            text-align: center;
+            min-width: 250px; /* Ensure it has some width */
+        }
+
+        #prediction-container p {
+            margin: 0;
+            font-size: 1.2em;
+            color: #555;
+        }
+
+        #sign-prediction {
+            font-weight: bold;
+            color: #008000; /* Green color for prediction */
+            display: inline-block; /* Allows min-width */
+            min-width: 100px; /* Space for longer words */
+            text-align: center;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 1.8em;
+            }
+            #video-container {
+                max-width: 95%;
+            }
+            #prediction-container p {
+                font-size: 1.1em;
+            }
+        }
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 1.6em;
+            }
+            body {
+                padding-top: 10px;
+            }
+             #video-container {
+                max-width: 98%;
+                border-width: 1px;
+            }
+             #prediction-container {
+                padding: 10px 15px;
+                min-width: 200px;
+             }
+            #prediction-container p {
+                font-size: 1em;
+            }
+             #sign-prediction {
+                min-width: 80px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Sign Language Detection</h1>
+
+    <div id="video-container">
+        <!-- This img tag requests the MJPEG stream from the /video_feed endpoint -->
+        <img id="video-feed" src="{{ url_for('video_feed') }}" alt="Loading video stream...">
+    </div>
+
+    <div id="prediction-container">
+        <p>Detected Sign: <span id="sign-prediction">Loading...</span></p>
+    </div>
+
+    <script>
+        const predictionElement = document.getElementById('sign-prediction');
+        const videoElement = document.getElementById('video-feed'); // Get reference to the img tag
+
+        // Function to update the sign prediction text
+        function updateSignPrediction(prediction) {
+            // Avoid updating if the prediction is exactly the same as the current text
+            // This reduces unnecessary DOM manipulation slightly
+            if (predictionElement.textContent !== prediction) {
+                 predictionElement.textContent = prediction;
+            }
+        }
+
+        // Function to fetch the latest prediction from the server
+        async function fetchPrediction() {
+            try {
+                // Make a GET request to the /get_prediction endpoint
+                const response = await fetch('/get_prediction');
+
+                if (!response.ok) {
+                    // Handle HTTP errors (e.g., 404 Not Found, 500 Internal Server Error)
+                    console.error(`HTTP error! Status: ${response.status}`);
+                    updateSignPrediction("Error");
+                    return; // Stop processing for this interval if error occurs
+                }
+
+                // Get the prediction text from the response body
+                const predictionText = await response.text();
+                updateSignPrediction(predictionText || "..."); // Display "..." if response is empty
+
+            } catch (error) {
+              
+                console.error('Error fetching prediction:', error);
+                updateSignPrediction("Connection Error");
+            }
+        }
+
+        // --- Polling Mechanism ---
+        // Set an interval to call fetchPrediction repeatedly
+        // Adjust the interval (in milliseconds) as needed (e.g., 500ms = 2 times per second)
+        const pollingInterval = 500; // ms
+        let pollingTimer = setInterval(fetchPrediction, pollingInterval);
+
+        // Optional: Fetch the prediction immediately when the page loads
+        fetchPrediction();
+
+        // Optional: Stop polling if the video feed fails to load (advanced)
+        videoElement.onerror = () => {
+            console.error("Video stream failed to load.");
+            updateSignPrediction("Video Error");
+            if (pollingTimer) {
+                clearInterval(pollingTimer); // Stop fetching predictions if video fails
+                pollingTimer = null;
+                console.log("Prediction polling stopped due to video error.");
+            }
+        };
+
+         videoElement.onload = () => {
+             console.log("Video stream started successfully.");
+             // If polling was stopped, you might want to restart it here,
+             // though typically onerror is more permanent.
+         };
+
+    </script>
+</body>
+</html>
