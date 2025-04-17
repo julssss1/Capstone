@@ -41,13 +41,14 @@
             <!-- Optional Links -->
             <div class="form-links">
                 <a href="#">Forgot Password?</a>
+                <p>Don't have an account? <a href="{{ url_for('signup_route') }}">Sign Up</a></p> <!-- Assuming you have a route named 'signup_route' -->
+
                 <!-- Add sign up link if applicable -->
                 <!-- <p>Don't have an account? <a href="#">Sign Up</a></p> -->
             </div>
         </form>
     </div>
 
-    <!-- Optional: Link to JavaScript file if needed -->
-    <!-- <script src="{{ url_for('static', filename='js/login.js') }}" defer></script> -->
+
 </body>
 </html>

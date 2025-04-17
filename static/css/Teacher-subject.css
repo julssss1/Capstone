@@ -1,0 +1,103 @@
+.admin-content {
+    padding: 20px;
+    background-color: var(--bg-light);
+    border-radius: 10px;
+    box-shadow: 0 4px 15px var(--shadow-color);
+    transition: box-shadow 0.3s ease, transform 0.2s ease;        
+}
+
+.controls-header {
+    
+    margin-bottom: 25px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid var(--border-color);
+  
+    display: flex;
+    justify-content: flex-end;
+}
+
+.add-lesson-btn {
+
+    padding: 10px 20px;
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.95em;
+    font-weight: 500;
+    transition: background-color 0.3s ease;
+    text-decoration: none;
+}
+.add-lesson-btn:hover {
+    background-color: #3a7bc8;
+}
+
+
+.lesson-list {
+    display: grid;
+    gap: 20px;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Responsive grid */
+}
+
+.lesson-card {
+    background: var(--bg-light);
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 15px var(--shadow-color);
+    border-left: 5px solid var(--secondary-color); /* Teacher subject accent */
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    transition: box-shadow 0.3s ease, transform 0.2s ease;
+}
+
+.lesson-card:hover {
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+    transform: translateY(-3px);
+}
+
+.lesson-card .card-header h3 {
+    font-size: 1.3em;
+    font-weight: 600;
+    color: var(--text-color);
+    margin-bottom: 5px;
+}
+.lesson-card .card-header span { /* e.g., for class code or student count */
+    font-size: 0.9em;
+    color: var(--text-color-light);
+}
+
+
+.lesson-card .card-actions {
+    margin-top: auto; /* Push actions to the bottom */
+    padding-top: 15px;
+    border-top: 1px solid var(--border-color);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.lesson-card .action-btn {
+    padding: 8px 16px;
+   /* background-color: var(--primary-color); Use specific colors */
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.9em;
+    font-weight: 500;
+    transition: background-color 0.3s ease;
+    text-decoration: none;
+    flex-grow: 1; /* Make buttons fill space */
+    text-align: center;
+}
+
+.lesson-card .action-btn.manage { background-color: var(--primary-color); }
+.lesson-card .action-btn.manage:hover { background-color: #3a7bc8; }
+
+.lesson-card .action-btn.assignment { background-color: var(--accent-color); }
+.lesson-card .action-btn.assignment:hover { background-color: #e0971f; }
+
+.lesson-card .action-btn.grades { background-color: var(--secondary-color); }
+.lesson-card .action-btn.grades:hover { background-color: #48cbad; }

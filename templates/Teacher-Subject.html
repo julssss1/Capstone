@@ -1,0 +1,108 @@
+<!-- --- START OF FILE Teacher-Subject.html --- -->
+<!-- (Recommended name: TeacherLessons.html) -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>My Subjects/Lessons - Handspoken CAES</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Base CSS -->
+  <link rel="stylesheet" href="../static/css/StudentDashboard.css">
+  <!-- Page Specific CSS -->
+  <link rel="stylesheet" href="../static/css/Teacher-subject.css">
+</head>
+<body>
+    <aside class="side-menu">
+        <div class="brand-logo">
+           <img src="../static/Images/caes_logo.png" alt="CAES Logo">
+            <h1>Handspoken</h1>
+            <span>CAES Teacher Portal</span>
+        </div>
+        <nav class="navigation">
+            <ul>
+                <li><a href="TeacherDashboard.html">Dashboard</a></li>
+                <li class="active"><a href="./Teacher-Subject.html">My Subjects/Lessons</a></li>
+                <li><a href="./Teacher-GradeTable.html">Gradebook</a></li>
+                <li><a href="#">Assignments</a></li>
+                <li><a href="#">Settings</a></li>
+            </ul>
+        </nav>
+        <div class="user-info">
+             <p>Level: <strong>Teacher</strong></p>
+             <a href="{{ url_for('logout') }}" class="logout-button">Logout</a>
+        </div>
+    </aside>
+
+    <main class="main-content admin-content"> <!-- Reusing class name -->
+        <header class="page-header">
+            <h2>My Subjects & Lessons</h2>
+            <p>Manage content, assignments, and grades for your assigned subjects.</p>
+        </header>
+
+         <div class="controls-header">
+             <!-- Optional: Add button if teachers can create lessons -->
+             <!-- <a href="{{ url_for('create_lesson') }}" class="add-lesson-btn">Create New Lesson</a> -->
+         </div>
+
+        <section class="lesson-list">
+            <!-- Dynamically generate cards for each subject/lesson assigned to the teacher -->
+            {% for lesson in teacher_lessons %}
+            <div class="lesson-card">
+                <div class="card-header">
+                    <h3>{{ lesson.name }}</h3>
+                    <span>{{ lesson.student_count }} Students</span> <!-- Example detail -->
+                </div>
+                <div class="card-actions">
+                     <a href="{{ url_for('manage_lesson', lesson_id=lesson.id) }}" class="action-btn manage">Manage Content</a>
+                     <a href="{{ url_for('create_assignment_for_lesson', lesson_id=lesson.id) }}" class="action-btn assignment">New Assignment</a>
+                     <a href="{{ url_for('teacher_gradebook', subject_filter=lesson.id) }}" class="action-btn grades">View Grades</a>
+                </div>
+            </div>
+            {% else %}
+                <p>You are not currently assigned to any subjects or lessons.</p>
+            {% endfor %}
+
+            <!-- Static Examples -->
+             <div class="lesson-card">
+                <div class="card-header">
+                    <h3>Mathematics 101</h3>
+                    <span>25 Students</span>
+                </div>
+                <div class="card-actions">
+                     <a href="#" class="action-btn manage">Manage Content</a>
+                     <a href="#" class="action-btn assignment">New Assignment</a>
+                     <a href="#" class="action-btn grades">View Grades</a>
+                </div>
+            </div>
+            <div class="lesson-card">
+                <div class="card-header">
+                    <h3>Sign Language Basics</h3>
+                    <span>18 Students</span>
+                </div>
+                 <div class="card-actions">
+                     <a href="#" class="action-btn manage">Manage Content</a>
+                     <a href="#" class="action-btn assignment">New Assignment</a>
+                     <a href="#" class="action-btn grades">View Grades</a>
+                </div>
+            </div>
+             <div class="lesson-card">
+                <div class="card-header">
+                    <h3>English 202</h3>
+                    <span>22 Students</span>
+                </div>
+                 <div class="card-actions">
+                     <a href="#" class="action-btn manage">Manage Content</a>
+                     <a href="#" class="action-btn assignment">New Assignment</a>
+                     <a href="#" class="action-btn grades">View Grades</a>
+                </div>
+            </div>
+
+        </section>
+    </main>
+
+ 
+</body>
+</html>

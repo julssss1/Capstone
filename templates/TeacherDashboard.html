@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teacher Dashboard - Handspoken CAES</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Base CSS -->
+    <link rel="stylesheet" href="../static/css/StudentDashboard.css">
+    <!-- Page Specific CSS -->
+    <link rel="stylesheet" href="../static/css/TeacherDashboard.css">  
+</head>
+<body>
+    <aside class="side-menu">
+        <div class="brand-logo">
+           <img src="../static/Images/caes_logo.png" alt="CAES Logo">
+            <h1>Handspoken</h1>
+            <span>CAES Teacher Portal</span>
+        </div>
+        <nav class="navigation">
+            <ul>
+                <li class="active"><a href="TeacherDashboard.html">Dashboard</a></li>
+                <li><a href="./Teacher-Subject.html">My Subjects/Lessons</a></li>
+                <li><a href="./Teacher-GradeTable.html">Gradebook</a></li>
+                <li><a href="#">Assignments</a></li>
+                <li><a href="#">Settings</a></li>
+            </ul>
+        </nav>
+        <div class="user-info">
+             <p>Level: <strong>Teacher</strong></p>
+             <!-- Add Teacher Name -->
+             <!-- <p>Welcome, [Teacher Name]</p> -->
+             <a href="{{ url_for('logout') }}" class="logout-button">Logout</a>
+        </div>
+    </aside>
+
+    <main class="main-content">
+        <header class="page-header">
+            <h2>Teacher Dashboard</h2>
+            <p>Welcome back! Manage your lessons and student progress.</p>
+        </header>
+
+        <!-- Statistics Section -->
+        <section class="dashboard-stats">
+            <div class="stat-card assignments">
+                <div class="card-icon">
+                    <span>📝</span>
+                </div>
+                <div class="card-info">
+                    <!-- Dynamic Data -->
+                    <h3>{{ pending_assignments_count | default('N/A') }}</h3>
+                    <span>Pending Assignments</span>
+                </div>
+            </div>
+            <div class="stat-card students">
+                <div class="card-icon">
+                    <span>👥</span>
+                </div>
+                <div class="card-info">
+                    <!-- Dynamic Data -->
+                    <h3>{{ total_students_count | default('N/A') }}</h3>
+                    <span>Total Students</span>
+                </div>
+            </div>
+             <div class="stat-card classes">
+                 <div class="card-icon">
+                    <span>📚</span>
+                </div>
+                <div class="card-info">
+                     <!-- Dynamic Data -->
+                     <h3>{{ subjects_taught_count | default('N/A') }}</h3>
+                    <span>Subjects Taught</span>
+                </div>
+            </div>
+           
+        </section>
+
+    
+        <section class="quick-actions">
+            <h3>Quick Actions</h3>
+            <a href="{{ url_for('create_assignment') }}" class="action-link">Create New Assignment</a>
+            <a href="{{ url_for('teacher_gradebook') }}" class="action-link">View Gradebook</a>
+            <a href="{{ url_for('teacher_subjects') }}" class="action-link">Manage Lessons</a>
+      
+        </section>
+    </main>
+</body>
+</html>
