@@ -159,7 +159,21 @@ body {
     color: var(--text-color);
     margin-bottom: 5px;
 }
+.cover-photo-container {
+    width: 100%; 
+    margin-bottom: 30px; 
+    border-radius: 10px; 
+    background-color: var(--border-color); 
+    box-shadow: 0 4px 10px var(--shadow-color); 
+    line-height: 0; 
+}
 
+.cover-photo {
+    display: block; 
+    width: 100%; 
+    height: 100%; 
+    border-radius: 10px;
+}
 .page-header p {
     font-size: 1em;
     color: var(--text-color-light);
@@ -488,7 +502,9 @@ body {
      .side-menu .brand-logo {
          padding: 15px;
      }
-
+     .cover-photo-container {
+        margin-bottom: 20px; 
+    }
     .main-content {
         margin-left: 60px;
         padding: 15px;

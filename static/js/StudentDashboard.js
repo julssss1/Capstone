@@ -1,8 +1,4 @@
-// static/js/StudentDashboard.js
 
-// --- Get DOM Elements ---
-// Note: These assume the IDs exist in the HTML when this script runs.
-// Using 'defer' in the <script> tag ensures this.
 const predictionDisplayElement = document.getElementById('detected-sign-display');
 const videoElement = document.getElementById('video-feed');
 const instructionTextElement = document.getElementById('instruction-text');
