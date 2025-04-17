@@ -24,30 +24,25 @@
 
         <h2 class="form-title">Login to Your Account</h2>
 
-        <!-- Add form tag with method and action -->
-        <form id="login-form" method="POST" action="{{ url_for('login_route') }}"> <!-- Adjust action URL -->
+  
+        <form id="login-form" method="POST" action="{{ url_for('login_route') }}"> 
             <div class="input-group">
                 <label for="email">Email</label>
                 <input type="email" id="email" name="email" required>
-                <!-- Removed inline span icon for simplicity, can be added back with CSS positioning -->
+             
             </div>
             <div class="input-group">
                 <label for="password">Password</label>
                 <input type="password" id="password" name="password" required>
-                <!-- Removed inline span icon -->
+            
             </div>
             <button type="submit" class="login-btn">Login</button>
 
-            <!-- Optional Links -->
+        
             <div class="form-links">
                 <a href="#">Forgot Password?</a>
-                <!-- Add sign up link if applicable -->
-                <!-- <p>Don't have an account? <a href="#">Sign Up</a></p> -->
             </div>
         </form>
     </div>
-
-    <!-- Optional: Link to JavaScript file if needed -->
-    <!-- <script src="{{ url_for('static', filename='js/login.js') }}" defer></script> -->
 </body>
 </html>
