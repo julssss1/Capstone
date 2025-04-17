@@ -1,0 +1,324 @@
+/* static/css/StudentDashboard.css */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Use a more standard font */
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    display: flex;
+    /* Make body take full viewport height */
+    min-height: 100vh;
+    background-color: #f4f4f8; /* Light background for contrast */
+}
+
+html {
+    height: 100%; /* Ensure html takes full height */
+}
+
+.side-menu {
+    background: #ccc9c9;
+    /* Use relative width, e.g., 250px or 20% */
+    width: 200px;
+    padding: 20px 0; /* Adjust padding */
+    display: flex;
+    flex-direction: column;
+    height: 100vh; /* Make side menu full height */
+    position: fixed; /* Fix the side menu */
+    left: 0;
+    top: 0;
+}
+
+.side-menu .admin {
+    /* Remove fixed height, let content define it */
+    padding: 20px; /* Add padding instead */
+    text-align: center; /* Center text */
+    border-bottom: 1px solid #aaa; /* Add a separator */
+    margin-bottom: 10px;
+}
+
+.side-menu .admin h1 {
+    font-size: 1.2em; /* Adjust font size */
+    color: #333;
+}
+
+.side-menu ul {
+    list-style: none; /* Remove bullet points */
+    padding: 0;
+    margin: 0;
+}
+
+.side-menu li {
+    font-size: 18px; /* Adjust font size */
+    padding: 15px 20px; /* Adjust padding */
+    color: rgb(0, 0, 0);
+    display: block; /* Make list items block level */
+    text-decoration: none; /* Remove underline if they were links */
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.side-menu li:hover {
+    background: rgb(220, 220, 220); /* Slightly different hover */
+    color: #000;
+}
+
+.main-content {
+    /* Add margin to the left to account for the fixed side menu */
+    margin-left: 200px;
+    flex-grow: 1;
+    background-color: #fff;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    min-height: 100vh; /* Ensure main content can fill height */
+}
+
+/* Assignment card styling (copied and slightly adapted) */
+.assignment {
+    /* Removed fixed height, let content dictate */
+    background-color: #eee; /* Lighter background */
+    border: 1px solid #ddd; /* Subtle border */
+    border-radius: 8px; /* Rounded corners */
+    padding: 15px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    display: flex; /* Use flex for internal alignment */
+    justify-content: center; /* Center sub-assignment */
+}
+
+.sub-assignment {
+    --primary-color: #3498db; /* Blue color scheme */
+    --secondary-color: #555;
+    width: 100%; /* Make it take available width */
+    max-width: 400px; /* Optional max width */
+    font-family: "Arial", sans-serif;
+    padding: 1rem;
+    cursor: pointer;
+    border-radius: 6px;
+    background: #f9f9f9;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    position: relative;
+    display: flex; /* Use flex for layout */
+    align-items: center; /* Vertically align items */
+    justify-content: space-between; /* Space out content and arrow */
+}
+
+.sub-assignment > * + * {
+    margin-left: 1em; /* Add space between elements horizontally */
+}
+
+.sub-assignment .card__content {
+    color: var(--secondary-color);
+    font-size: 1rem; /* Slightly larger */
+    font-weight: bold;
+    flex-grow: 1; /* Allow content to take space */
+}
+
+.sub-assignment .card__date {
+    color: #6e6b80;
+    font-size: 0.85rem; /* Slightly larger */
+    white-space: nowrap; /* Prevent date wrapping */
+}
+
+.sub-assignment .card__arrow {
+    position: static; /* Remove absolute positioning */
+    background: var(--primary-color);
+    padding: 0.5rem; /* Slightly larger padding */
+    border-radius: 50%; /* Make it circular */
+    transition: background-color 0.2s, transform 0.2s;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-shrink: 0; /* Prevent arrow from shrinking */
+}
+
+.sub-assignment svg {
+    transition: 0.2s;
+}
+
+/* Hover effects for sub-assignment */
+.sub-assignment:hover {
+    box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.sub-assignment:hover .card__content {
+    color: var(--primary-color);
+}
+
+.sub-assignment:hover .card__arrow {
+    background: #2980b9; /* Darker blue */
+    transform: translateX(3px);
+}
+
+/* Bottom Section Layout */
+.bottom-section {
+    display: flex;
+    gap: 20px;
+    flex-grow: 1; /* Allow bottom section to take remaining space */
+    /* Align items to stretch vertically if needed */
+    align-items: stretch;
+}
+
+/* Module / Practice Area Styling */
+.module {
+    background-color: #f0f0f0; /* Light grey background */
+    flex: 2; /* Takes more horizontal space */
+    padding: 15px;
+    border-radius: 8px;
+    display: flex; /* Use flex for sub-module */
+    flex-direction: column; /* Stack elements vertically */
+}
+
+.sub-module.practice-area {
+    /* Remove the complex 3D/hover styles unless specifically needed */
+    border-radius: 10px;
+    width: 100%; /* Take full width of parent */
+    background-color: whitesmoke;
+    box-shadow: 1px 1px 12px rgba(0,0,0,0.1);
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center content horizontally */
+    justify-content: flex-start; /* Align content to the top */
+    color: #333;
+    flex-grow: 1; /* Allow practice area to grow */
+    /* Remove fixed height, perspective, transforms */
+}
+
+.sub-module.practice-area h2 {
+    margin-top: 0;
+    margin-bottom: 15px;
+    color: #34495e;
+}
+
+/* Removing the old lesson flip effect */
+.Lesson { display: none; } /* Hide the old Lesson div */
+
+p { /* General paragraph styling */
+    font-size: 16px; /* Adjust base size */
+    line-height: 1.5;
+    /* Bolder removed, apply boldness where needed */
+}
+
+/* Camera / Video Container Styling */
+.camera.video-container {
+    /* background-color: #ddd; */ /* Removed background color */
+    flex: 1; /* Takes less space than module */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center; /* Center video vertically */
+    padding: 0; /* Remove padding if video has its own */
+    /* Removed fixed width/height, let content size it */
+    border: 1px solid #ccc; /* Add a border */
+    border-radius: 8px;
+    background-color: #000; /* Black background while loading */
+    overflow: hidden; /* Hide overflow */
+    min-height: 200px; /* Ensure minimum height */
+}
+
+#video-feed {
+    display: block;
+    width: 100%; /* Make video fill container width */
+    height: auto; /* Maintain aspect ratio */
+    max-height: 100%; /* Ensure video doesn't overflow container */
+    border-radius: 7px; /* Slightly smaller radius */
+}
+
+/* Styling for Practice Area Elements (copied/adapted from index.html style block) */
+#sign-buttons {
+    margin-bottom: 20px;
+    text-align: center; /* Center buttons container */
+}
+
+#sign-buttons p {
+    margin-bottom: 10px;
+    color: #555;
+    font-weight: bold;
+    font-size: 0.95em;
+}
+
+#sign-buttons button {
+    background-color: #3498db; /* Blue */
+    color: white;
+    border: none;
+    padding: 8px 12px; /* Adjust padding */
+    margin: 4px; /* Adjust margin */
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.9em; /* Adjust font size */
+    transition: background-color 0.3s ease, transform 0.1s ease;
+}
+
+#sign-buttons button:hover {
+    background-color: #2980b9; /* Darker blue */
+}
+
+#sign-buttons button:active {
+    transform: scale(0.95); /* Click effect */
+}
+
+#sign-buttons button.active {
+    background-color: #e67e22; /* Orange when active */
+    font-weight: bold;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+}
+
+#target-sign-display {
+    margin-top: 15px; /* Space above this section */
+    width: 100%; /* Take full width */
+    min-height: 200px; /* Ensure space */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-top: 1px solid #eee; /* Separator line */
+    padding-top: 15px;
+}
+
+#target-sign-display p#instruction-text {
+    font-size: 1.05em; /* Adjust size */
+    margin-bottom: 10px;
+    color: #333;
+    min-height: 2.2em; /* Reserve space */
+    text-align: center;
+}
+
+#target-image {
+    max-width: 120px; /* Adjust size */
+    max-height: 120px;
+    width: auto;
+    height: auto;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin-bottom: 15px;
+    background-color: #eee;
+}
+
+#feedback {
+    margin-top: 10px;
+    font-size: 1.1em; /* Adjust size */
+    font-weight: bold;
+    min-height: 30px;
+    color: #555;
+    transition: color 0.3s ease;
+    text-align: center;
+    padding: 5px;
+    width: 100%;
+}
+
+#feedback.success { color: #2ecc71; } /* Green */
+#feedback.incorrect { color: #e74c3c; } /* Red */
+#feedback.holding { color: #f39c12; } /* Yellow/Orange */
+
+#debug-info {
+    margin-top: 15px;
+    font-size: 0.9em;
+    color: #777;
+    border-top: 1px dashed #ccc;
+    padding-top: 10px;
+    text-align: center;
+    width: 100%;
+}
