@@ -4,70 +4,121 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Student Dashboard - Sign Language Practice</title>
-    <!-- Link to the external CSS file -->
+    <title>Student Dashboard - Handspoken CAES</title>
+  
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/StudentDashboard.css') }}">
 </head>
 <body>
-    <div class="side-menu">
-        <div class="admin">
-            <h1>Level <br>Student</h1>
+    <aside class="side-menu">
+        <div class="brand-logo">
+        
+           <img src="{{ url_for('static', filename='images/caes_logo.png') }}" alt="CAES Logo"> 
+            <h1>Handspoken</h1>
+            <span>CAES Student Portal</span>
         </div>
-        <ul>
-            <li>Settings</li>
-            <li>Help </li>
-            <!-- Add other menu items as needed -->
-        </ul>
-    </div>
+        <nav class="navigation">
+            <ul>
+                <li class="active"><a href="#">Dashboard</a></li> <!-- Add an 'active' class for the current page -->
+                <li><a href="#">My Progress</a></li>
+                <li><a href="#">Assignments</a></li>
+                <li><a href="#">Settings</a></li>
+                <li><a href="#">Help & Support</a></li>
+                <!-- Add other menu items as needed -->
+            </ul>
+        </nav>
+        <div class="user-info">
+             <p>Level: <strong>Student</strong></p>
+             <!-- Maybe add student name here if available -->
+             <!-- <p>Welcome, [Student Name]</p> -->
+             <a href="/logout" class="logout-button">Logout</a> <!-- Assuming a /logout route -->
+        </div>
+    </aside>
 
     <main class="main-content">
+        <header class="page-header">
+            <h2>Welcome to your Dashboard!</h2>
+            <p>Practice your signs and complete your assignments.</p>
+        </header>
+
         <!-- Assignment Section -->
-        <div class="assignment">
-            <div class="sub-assignment">
-                <p class="card__content">Assignment 1: </p>
-                <div class="card__date">
-                    June 25, 2025
+        <section class="assignments-overview">
+             <h3>Pending Assignments</h3>
+             <div class="assignment-card">
+                <div class="card-icon">
+                    <!-- Placeholder for an icon -->
+                    <span>📚</span>
                 </div>
-                <div class="card__arrow">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" height="15" width="15">
+                <div class="card-details">
+                    <p class="card__content">Assignment 1: Basic Greetings</p>
+                    <div class="card__date">
+                        Due: June 25, 2025
+                    </div>
+                </div>
+                <a href="#" class="card__arrow" aria-label="View Assignment">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" height="18" width="18">
                         <path fill="#fff" d="M13.4697 17.9697C13.1768 18.2626 13.1768 18.7374 13.4697 19.0303C13.7626 19.3232 14.2374 19.3232 14.5303 19.0303L20.3232 13.2374C21.0066 12.554 21.0066 11.446 20.3232 10.7626L14.5303 4.96967C14.2374 4.67678 13.7626 4.67678 13.4697 4.96967C13.1768 5.26256 13.1768 5.73744 13.4697 6.03033L18.6893 11.25H4C3.58579 11.25 3.25 11.5858 3.25 12C3.25 12.4142 3.58579 12.75 4 12.75H18.6893L13.4697 17.9697Z"></path>
                     </svg>
+                </a>
+             </div>
+             <!-- Add more assignment cards as needed -->
+              <div class="assignment-card completed"> <!-- Example of a completed card -->
+                <div class="card-icon">
+                    <span>✅</span>
                 </div>
-            </div>
-        </div>
+                <div class="card-details">
+                    <p class="card__content">Practice: Alphabet A-E</p>
+                    <div class="card__date">
+                        Completed: June 20, 2025
+                    </div>
+                </div>
+                <a href="#" class="card__arrow" aria-label="View Details">
+                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" height="18" width="18">
+                       <path fill="#fff" d="M13.4697 17.9697C13.1768 18.2626 13.1768 18.7374 13.4697 19.0303C13.7626 19.3232 14.2374 19.3232 14.5303 19.0303L20.3232 13.2374C21.0066 12.554 21.0066 11.446 20.3232 10.7626L14.5303 4.96967C14.2374 4.67678 13.7626 4.67678 13.4697 4.96967C13.1768 5.26256 13.1768 5.73744 13.4697 6.03033L18.6893 11.25H4C3.58579 11.25 3.25 11.5858 3.25 12C3.25 12.4142 3.58579 12.75 4 12.75H18.6893L13.4697 17.9697Z"></path>
+                   </svg>
+               </a>
+             </div>
+        </section>
 
         <!-- Bottom Section: Practice Area and Video Feed -->
-        <div class="bottom-section">
+        <section class="practice-section">
             <!-- Practice Area -->
-            <div class="module">
-                <div class="sub-module practice-area">
-                    <h2>Practice a Sign</h2>
-                    <div id="sign-buttons">
-                        <p>Select a sign to practice:</p>
-                        <!-- Buttons are generated by Flask/Jinja -->
-                        {% for sign in available_signs %}
-                            <button onclick="startPractice('{{ sign }}')">{{ sign }}</button>
-                        {% endfor %}
+            <div class="practice-module">
+                <h3>Practice a Sign</h3>
+                <div id="sign-buttons">
+                    <p>Select a sign below to start practicing:</p>
+                    <!-- Buttons are generated by Flask/Jinja -->
+                    {% for sign in available_signs %}
+                        <button class="sign-btn" onclick="startPractice('{{ sign }}')">{{ sign }}</button>
+                    {% endfor %}
+                </div>
+                <!-- Area to show target sign, instructions, and feedback -->
+                <div id="target-sign-display">
+                    <p id="instruction-text">Select a sign above to begin.</p>
+                    <div class="image-placeholder">
+                       <img id="target-image" src="" alt="Sign to practice" style="display: none;">
+                       <span id="image-placeholder-text">Sign image appears here</span>
                     </div>
-                    <!-- Area to show target sign, instructions, and feedback -->
-                    <div id="target-sign-display">
-                        <p id="instruction-text">Select a sign above to begin.</p>
-                        <img id="target-image" src="" alt="Sign to practice" style="display: none;">
-                        <div id="feedback">Waiting for practice...</div>
-                    </div>
-                    <!-- Display the stable prediction (optional, mostly for debugging) -->
-                    <div id="debug-info">
-                        Stable Detected: <span id="detected-sign-display">...</span>
-                    </div>
+                    <div id="feedback" class="status-waiting">Waiting for practice...</div>
+                </div>
+                <!-- Display the stable prediction (optional, mostly for debugging) -->
+                <div id="debug-info" style="display: none;"> <!-- Hidden by default -->
+                    Stable Detected: <span id="detected-sign-display">...</span>
                 </div>
             </div>
 
             <!-- Video Feed -->
-            <div class="camera video-container">
-                <!-- Video feed from Flask -->
-                <img id="video-feed" src="{{ url_for('video_feed') }}" alt="Loading hand sign camera...">
+            <div class="video-module">
+                 <h3>Your Camera Feed</h3>
+                 <div class="video-container">
+                    <!-- Video feed from Flask -->
+                    <img id="video-feed" src="{{ url_for('video_feed') }}" alt="Loading hand sign camera...">
+                 </div>
+                 <p class="camera-note">Ensure good lighting and clear view of your hand.</p>
             </div>
-        </div>
+        </section>
     </main>
 
     <!-- Inline script to pass Flask URLs to the external JS -->

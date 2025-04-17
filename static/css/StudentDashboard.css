@@ -1,324 +1,504 @@
-/* static/css/StudentDashboard.css */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-/* Use a more standard font */
-body {
-    font-family: Arial, Helvetica, sans-serif;
-    display: flex;
-    /* Make body take full viewport height */
-    min-height: 100vh;
-    background-color: #f4f4f8; /* Light background for contrast */
+:root {
+    --primary-color: #4A90E2;
+    --secondary-color: #50E3C2;
+    --accent-color: #F5A623;
+    --text-color: #333;
+    --text-color-light: #555;
+    --bg-color: #F7F9FC;
+    --bg-light: #FFFFFF;
+    --border-color: #E0E5EB;
+    --shadow-color: rgba(0, 0, 0, 0.08);
+    --font-family: 'Poppins', sans-serif;
 }
 
 html {
-    height: 100%; /* Ensure html takes full height */
+    height: 100%;
+}
+
+body {
+    font-family: var(--font-family);
+    display: flex;
+    min-height: 100vh;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    line-height: 1.6;
 }
 
 .side-menu {
-    background: #ccc9c9;
-    /* Use relative width, e.g., 250px or 20% */
-    width: 200px;
-    padding: 20px 0; /* Adjust padding */
+    background: var(--bg-light);
+    width: 260px;
+    padding: 25px 0;
     display: flex;
     flex-direction: column;
-    height: 100vh; /* Make side menu full height */
-    position: fixed; /* Fix the side menu */
+    height: 100vh;
+    position: fixed;
     left: 0;
     top: 0;
+    border-right: 1px solid var(--border-color);
+    box-shadow: 2px 0 10px var(--shadow-color);
 }
 
-.side-menu .admin {
-    /* Remove fixed height, let content define it */
-    padding: 20px; /* Add padding instead */
-    text-align: center; /* Center text */
-    border-bottom: 1px solid #aaa; /* Add a separator */
+.side-menu .brand-logo {
+    padding: 0 25px 20px 25px;
+    text-align: center;
+    border-bottom: 1px solid var(--border-color);
+    margin-bottom: 20px;
+}
+
+.side-menu .brand-logo img {
+    max-width: 80px;
     margin-bottom: 10px;
 }
 
-.side-menu .admin h1 {
-    font-size: 1.2em; /* Adjust font size */
-    color: #333;
+.side-menu .brand-logo h1 {
+    font-size: 1.6em;
+    font-weight: 600;
+    color: var(--primary-color);
+    margin-bottom: 2px;
 }
 
-.side-menu ul {
-    list-style: none; /* Remove bullet points */
-    padding: 0;
-    margin: 0;
+.side-menu .brand-logo span {
+    font-size: 0.9em;
+    color: var(--text-color-light);
 }
 
-.side-menu li {
-    font-size: 18px; /* Adjust font size */
-    padding: 15px 20px; /* Adjust padding */
-    color: rgb(0, 0, 0);
-    display: block; /* Make list items block level */
-    text-decoration: none; /* Remove underline if they were links */
-    cursor: pointer;
+.side-menu .navigation {
+    flex-grow: 1;
+}
+
+.side-menu .navigation ul {
+    list-style: none;
+}
+
+.side-menu .navigation li {
+    margin: 5px 0;
+}
+
+.side-menu .navigation li a {
+    font-size: 1em;
+    font-weight: 500;
+    padding: 12px 25px;
+    color: var(--text-color-light);
+    display: block;
+    text-decoration: none;
+    border-left: 4px solid transparent;
+    transition: all 0.3s ease;
+}
+
+
+.side-menu .navigation li a:hover {
+    background: var(--bg-color);
+    color: var(--primary-color);
+    border-left-color: var(--accent-color);
+}
+
+.side-menu .navigation li.active a {
+    background: var(--bg-color);
+    color: var(--primary-color);
+    font-weight: 600;
+    border-left-color: var(--primary-color);
+}
+
+.side-menu .user-info {
+    padding: 20px 25px;
+    border-top: 1px solid var(--border-color);
+    font-size: 0.9em;
+    color: var(--text-color-light);
+}
+
+.side-menu .user-info p {
+    margin-bottom: 10px;
+}
+.side-menu .user-info strong {
+    color: var(--text-color);
+    font-weight: 600;
+}
+
+.logout-button {
+    display: block;
+    width: 100%;
+    padding: 8px 10px;
+    background-color: #e74c3c;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    text-align: center;
+    text-decoration: none;
+    font-weight: 500;
     transition: background-color 0.3s ease;
 }
 
-.side-menu li:hover {
-    background: rgb(220, 220, 220); /* Slightly different hover */
-    color: #000;
+.logout-button:hover {
+    background-color: #c0392b;
 }
 
 .main-content {
-    /* Add margin to the left to account for the fixed side menu */
-    margin-left: 200px;
+    margin-left: 260px;
     flex-grow: 1;
-    background-color: #fff;
-    padding: 20px;
+    padding: 30px;
     display: flex;
     flex-direction: column;
-    gap: 20px;
-    min-height: 100vh; /* Ensure main content can fill height */
+    gap: 30px;
+    min-height: 100vh;
 }
 
-/* Assignment card styling (copied and slightly adapted) */
-.assignment {
-    /* Removed fixed height, let content dictate */
-    background-color: #eee; /* Lighter background */
-    border: 1px solid #ddd; /* Subtle border */
-    border-radius: 8px; /* Rounded corners */
-    padding: 15px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-    display: flex; /* Use flex for internal alignment */
-    justify-content: center; /* Center sub-assignment */
+.page-header {
+    padding-bottom: 15px;
+    border-bottom: 1px solid var(--border-color);
 }
 
-.sub-assignment {
-    --primary-color: #3498db; /* Blue color scheme */
-    --secondary-color: #555;
-    width: 100%; /* Make it take available width */
-    max-width: 400px; /* Optional max width */
-    font-family: "Arial", sans-serif;
-    padding: 1rem;
-    cursor: pointer;
-    border-radius: 6px;
-    background: #f9f9f9;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-    position: relative;
-    display: flex; /* Use flex for layout */
-    align-items: center; /* Vertically align items */
-    justify-content: space-between; /* Space out content and arrow */
+.page-header h2 {
+    font-size: 1.8em;
+    font-weight: 600;
+    color: var(--text-color);
+    margin-bottom: 5px;
 }
 
-.sub-assignment > * + * {
-    margin-left: 1em; /* Add space between elements horizontally */
+.page-header p {
+    font-size: 1em;
+    color: var(--text-color-light);
 }
 
-.sub-assignment .card__content {
-    color: var(--secondary-color);
-    font-size: 1rem; /* Slightly larger */
-    font-weight: bold;
-    flex-grow: 1; /* Allow content to take space */
+.assignments-overview {
+    background-color: var(--bg-light);
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 15px var(--shadow-color);
 }
 
-.sub-assignment .card__date {
-    color: #6e6b80;
-    font-size: 0.85rem; /* Slightly larger */
-    white-space: nowrap; /* Prevent date wrapping */
-}
-
-.sub-assignment .card__arrow {
-    position: static; /* Remove absolute positioning */
-    background: var(--primary-color);
-    padding: 0.5rem; /* Slightly larger padding */
-    border-radius: 50%; /* Make it circular */
-    transition: background-color 0.2s, transform 0.2s;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-shrink: 0; /* Prevent arrow from shrinking */
-}
-
-.sub-assignment svg {
-    transition: 0.2s;
-}
-
-/* Hover effects for sub-assignment */
-.sub-assignment:hover {
-    box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.15);
-}
-
-.sub-assignment:hover .card__content {
+.assignments-overview h3 {
+    font-size: 1.4em;
+    font-weight: 600;
+    margin-bottom: 20px;
     color: var(--primary-color);
 }
 
-.sub-assignment:hover .card__arrow {
-    background: #2980b9; /* Darker blue */
+.assignment-card {
+    background: #f9f9f9;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    transition: box-shadow 0.3s ease, transform 0.2s ease;
+    position: relative;
+}
+
+.assignment-card:hover {
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+    transform: translateY(-2px);
+}
+
+.assignment-card .card-icon {
+    font-size: 1.8em;
+    flex-shrink: 0;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+}
+.assignment-card.completed .card-icon {
+
+}
+
+
+.assignment-card .card-details {
+    flex-grow: 1;
+}
+
+.assignment-card .card__content {
+    font-weight: 500;
+    font-size: 1.05em;
+    color: var(--text-color);
+    margin-bottom: 3px;
+}
+
+.assignment-card .card__date {
+    color: var(--text-color-light);
+    font-size: 0.85em;
+}
+
+.assignment-card .card__arrow {
+    background: var(--primary-color);
+    color: white;
+    padding: 8px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    flex-shrink: 0;
+    transition: background-color 0.2s, transform 0.2s;
+}
+
+.assignment-card:hover .card__arrow {
+    background: #3a7bc8;
     transform: translateX(3px);
 }
 
-/* Bottom Section Layout */
-.bottom-section {
+.assignment-card.completed {
+    background-color: #e8f5e9;
+    border-color: #c8e6c9;
+}
+.assignment-card.completed .card__content {
+    text-decoration: line-through;
+    color: #66bb6a;
+}
+.assignment-card.completed .card__arrow {
+    background: #66bb6a;
+}
+.assignment-card.completed:hover .card__arrow {
+    background: #4caf50;
+}
+
+
+.practice-section {
     display: flex;
-    gap: 20px;
-    flex-grow: 1; /* Allow bottom section to take remaining space */
-    /* Align items to stretch vertically if needed */
+    gap: 30px;
+    flex-grow: 1;
     align-items: stretch;
 }
 
-/* Module / Practice Area Styling */
-.module {
-    background-color: #f0f0f0; /* Light grey background */
-    flex: 2; /* Takes more horizontal space */
-    padding: 15px;
-    border-radius: 8px;
-    display: flex; /* Use flex for sub-module */
-    flex-direction: column; /* Stack elements vertically */
-}
-
-.sub-module.practice-area {
-    /* Remove the complex 3D/hover styles unless specifically needed */
+.practice-module {
+    background-color: var(--bg-light);
+    flex: 3;
+    padding: 25px;
     border-radius: 10px;
-    width: 100%; /* Take full width of parent */
-    background-color: whitesmoke;
-    box-shadow: 1px 1px 12px rgba(0,0,0,0.1);
-    padding: 20px;
     display: flex;
     flex-direction: column;
-    align-items: center; /* Center content horizontally */
-    justify-content: flex-start; /* Align content to the top */
-    color: #333;
-    flex-grow: 1; /* Allow practice area to grow */
-    /* Remove fixed height, perspective, transforms */
+    box-shadow: 0 4px 15px var(--shadow-color);
 }
 
-.sub-module.practice-area h2 {
-    margin-top: 0;
-    margin-bottom: 15px;
-    color: #34495e;
-}
-
-/* Removing the old lesson flip effect */
-.Lesson { display: none; } /* Hide the old Lesson div */
-
-p { /* General paragraph styling */
-    font-size: 16px; /* Adjust base size */
-    line-height: 1.5;
-    /* Bolder removed, apply boldness where needed */
-}
-
-/* Camera / Video Container Styling */
-.camera.video-container {
-    /* background-color: #ddd; */ /* Removed background color */
-    flex: 1; /* Takes less space than module */
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center; /* Center video vertically */
-    padding: 0; /* Remove padding if video has its own */
-    /* Removed fixed width/height, let content size it */
-    border: 1px solid #ccc; /* Add a border */
-    border-radius: 8px;
-    background-color: #000; /* Black background while loading */
-    overflow: hidden; /* Hide overflow */
-    min-height: 200px; /* Ensure minimum height */
-}
-
-#video-feed {
-    display: block;
-    width: 100%; /* Make video fill container width */
-    height: auto; /* Maintain aspect ratio */
-    max-height: 100%; /* Ensure video doesn't overflow container */
-    border-radius: 7px; /* Slightly smaller radius */
-}
-
-/* Styling for Practice Area Elements (copied/adapted from index.html style block) */
-#sign-buttons {
+.practice-module h3 {
+    font-size: 1.4em;
+    font-weight: 600;
     margin-bottom: 20px;
-    text-align: center; /* Center buttons container */
+    color: var(--primary-color);
+    text-align: center;
+}
+
+#sign-buttons {
+    margin-bottom: 25px;
+    text-align: center;
 }
 
 #sign-buttons p {
-    margin-bottom: 10px;
-    color: #555;
-    font-weight: bold;
-    font-size: 0.95em;
+    margin-bottom: 15px;
+    color: var(--text-color-light);
+    font-weight: 500;
+    font-size: 1em;
 }
 
-#sign-buttons button {
-    background-color: #3498db; /* Blue */
+#sign-buttons .sign-btn {
+    background-color: var(--primary-color);
     color: white;
     border: none;
-    padding: 8px 12px; /* Adjust padding */
-    margin: 4px; /* Adjust margin */
-    border-radius: 5px;
+    padding: 10px 18px;
+    margin: 5px;
+    border-radius: 20px;
     cursor: pointer;
-    font-size: 0.9em; /* Adjust font size */
-    transition: background-color 0.3s ease, transform 0.1s ease;
+    font-size: 0.95em;
+    font-weight: 500;
+    transition: background-color 0.3s ease, transform 0.1s ease, box-shadow 0.2s ease;
 }
 
-#sign-buttons button:hover {
-    background-color: #2980b9; /* Darker blue */
+#sign-buttons .sign-btn:hover {
+    background-color: #3a7bc8;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
 }
 
-#sign-buttons button:active {
-    transform: scale(0.95); /* Click effect */
+#sign-buttons .sign-btn:active {
+    transform: scale(0.97);
 }
 
-#sign-buttons button.active {
-    background-color: #e67e22; /* Orange when active */
-    font-weight: bold;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+#sign-buttons .sign-btn.active {
+    background-color: var(--accent-color);
+    font-weight: 600;
+    box-shadow: 0 0 10px rgba(245, 166, 35, 0.4);
 }
 
 #target-sign-display {
-    margin-top: 15px; /* Space above this section */
-    width: 100%; /* Take full width */
-    min-height: 200px; /* Ensure space */
+    margin-top: 15px;
+    flex-grow: 1;
+    width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
-    border-top: 1px solid #eee; /* Separator line */
-    padding-top: 15px;
+    justify-content: center;
+    border-top: 1px solid var(--border-color);
+    padding-top: 20px;
+    min-height: 250px;
 }
 
 #target-sign-display p#instruction-text {
-    font-size: 1.05em; /* Adjust size */
-    margin-bottom: 10px;
-    color: #333;
-    min-height: 2.2em; /* Reserve space */
+    font-size: 1.1em;
+    margin-bottom: 15px;
+    color: var(--text-color);
+    font-weight: 500;
+    min-height: 1.5em;
     text-align: center;
+}
+
+.image-placeholder {
+    width: 150px;
+    height: 150px;
+    border: 2px dashed var(--border-color);
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+    background-color: #f8f8f8;
+    position: relative;
 }
 
 #target-image {
-    max-width: 120px; /* Adjust size */
-    max-height: 120px;
+    max-width: 100%;
+    max-height: 100%;
     width: auto;
     height: auto;
-    border: 1px solid #ddd;
     border-radius: 4px;
-    margin-bottom: 15px;
-    background-color: #eee;
+    display: none;
+    background-color: transparent;
+    border: none;
 }
+
+#image-placeholder-text {
+    position: absolute;
+    font-size: 0.9em;
+    color: var(--text-color-light);
+    text-align: center;
+    padding: 10px;
+}
+
+#target-image[src]:not([src=""]) + #image-placeholder-text {
+    display: none;
+}
+#target-image[src]:not([src=""]) {
+    display: block;
+}
+
 
 #feedback {
     margin-top: 10px;
-    font-size: 1.1em; /* Adjust size */
-    font-weight: bold;
-    min-height: 30px;
-    color: #555;
-    transition: color 0.3s ease;
+    font-size: 1.15em;
+    font-weight: 600;
+    min-height: 35px;
+    padding: 8px 15px;
+    border-radius: 6px;
+    transition: all 0.3s ease;
     text-align: center;
-    padding: 5px;
-    width: 100%;
+    width: 80%;
+    max-width: 300px;
 }
 
-#feedback.success { color: #2ecc71; } /* Green */
-#feedback.incorrect { color: #e74c3c; } /* Red */
-#feedback.holding { color: #f39c12; } /* Yellow/Orange */
+#feedback.status-waiting { background-color: #e0e5eb; color: var(--text-color-light); }
+#feedback.status-success { background-color: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+#feedback.status-incorrect { background-color: #f8d7da; color: #721c24; border: 1px solid #f5c6cb;}
+#feedback.status-holding { background-color: #fff3cd; color: #856404; border: 1px solid #ffeeba;}
 
 #debug-info {
-    margin-top: 15px;
-    font-size: 0.9em;
-    color: #777;
+    margin-top: 20px;
+    font-size: 0.85em;
+    color: #aaa;
     border-top: 1px dashed #ccc;
     padding-top: 10px;
     text-align: center;
     width: 100%;
+}
+
+.video-module {
+    background-color: var(--bg-light);
+    flex: 2;
+    padding: 25px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: 0 4px 15px var(--shadow-color);
+}
+
+.video-module h3 {
+    font-size: 1.4em;
+    font-weight: 600;
+    margin-bottom: 20px;
+    color: var(--primary-color);
+}
+
+.video-container {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    background-color: #222;
+    border-radius: 8px;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid var(--border-color);
+    margin-bottom: 15px;
+}
+
+#video-feed {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.camera-note {
+    font-size: 0.9em;
+    color: var(--text-color-light);
+    text-align: center;
+}
+
+@media (max-width: 1200px) {
+    .practice-section {
+        flex-direction: column;
+    }
+    .practice-module, .video-module {
+        flex: 1;
+    }
+}
+
+@media (max-width: 768px) {
+    .side-menu {
+        width: 60px;
+        overflow: hidden;
+    }
+    .side-menu .brand-logo h1,
+    .side-menu .brand-logo span,
+    .side-menu .navigation li a span,
+    .side-menu .user-info {
+        display: none;
+    }
+    .side-menu .navigation li a {
+        padding: 15px;
+        text-align: center;
+        border-left: none;
+        border-bottom: 4px solid transparent;
+    }
+     .side-menu .navigation li.active a {
+        border-left-color: transparent;
+        border-bottom-color: var(--primary-color);
+    }
+     .side-menu .brand-logo {
+         padding: 15px;
+     }
+
+    .main-content {
+        margin-left: 60px;
+        padding: 15px;
+    }
+    .page-header h2 { font-size: 1.5em; }
+    .assignments-overview h3, .practice-module h3, .video-module h3 { font-size: 1.2em; }
 }

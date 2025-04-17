@@ -7,12 +7,9 @@ from collections import deque
 import time
 from flask import Flask, render_template, Response, url_for # Added url_for
 
-# Suppress specific UserWarning from sklearn about feature names
+
 warnings.filterwarnings("ignore", category=UserWarning, message="X does not have valid feature names, but")
 
-# --- Flask App Initialization ---
-# Flask automatically looks for 'templates' and 'static' folders
-# Ensure 'static' folder exists and contains Student.css and sign images (A.png, B.png etc.)
 app = Flask(__name__)
 
 # --- Global Variables ---
@@ -36,24 +33,9 @@ def initialize_resources():
     # --- Load the Model ---
     try:
         with open(MODEL_PATH, 'rb') as f:
-            # --- OPTION 1: If your pickle file *only* contains the classifier: ---
             clf = pickle.load(f)
             scaler = None # Explicitly set to None if no scaler saved
             print(f"Model (classifier only) loaded successfully from {MODEL_PATH}.")
-
-            # --- OPTION 2: If your pickle file contains both classifier and scaler (e.g., in a dictionary): ---
-            # try:
-            #     model_data = pickle.load(f)
-            #     clf = model_data['classifier']
-            #     scaler = model_data['scaler']
-            #     print(f"Model (classifier and scaler) loaded successfully from {MODEL_PATH}.")
-            # except (KeyError, TypeError):
-            #     # Fallback if structure is different or only classifier is present
-            #     f.seek(0) # Rewind file pointer
-            #     clf = pickle.load(f)
-            #     scaler = None
-            #     print(f"Model (fallback: classifier only) loaded successfully from {MODEL_PATH}.")
-
         if scaler:
             print("Scaler loaded.")
         else:
@@ -122,35 +104,25 @@ def process_frame(frame):
         )
 
         try:
-            # --- Feature Extraction (MUST MATCH TRAINING) ---
+           
             landmarks = hand_landmarks.landmark
-            # 1. Get all landmark coordinates (x, y, z)
             coords = np.array([[lm.x, lm.y, lm.z] for lm in landmarks])
-            # 2. Make coordinates relative to the wrist (landmark 0)
             wrist = coords[0]
             relative_coords = coords - wrist
-             # 3. Normalize by the maximum distance from wrist to any other landmark
-            max_dist = np.max(np.linalg.norm(relative_coords[1:], axis=1)) # Avoid dividing by zero if hand collapsed
-            if max_dist < 1e-6: # Check for very small max_dist (potential issue)
-                 # Handle case where hand landmarks are too close (e.g., clenched fist near wrist)
-                 # Add small epsilon to avoid division by zero but signal potential issue
+            max_dist = np.max(np.linalg.norm(relative_coords[1:], axis=1)) 
+            if max_dist < 1e-6: 
+                 
                  normalized_coords = relative_coords / (max_dist + 1e-6)
             else:
                  normalized_coords = relative_coords / max_dist
 
-            # 4. Flatten into a feature vector (shape depends on whether wrist is included)
-            # !! IMPORTANT: Choose the flatten method that matches your training !!
-            # Example 1: Trained WITH wrist (landmark 0) included (resulting in 21*3 = 63 features)
-            feature_vector = normalized_coords.flatten().reshape(1, -1) # Shape (1, 63)
-            # Example 2: Trained WITHOUT wrist (using landmarks 1-20) (resulting in 20*3 = 60 features)
-            # feature_vector = normalized_coords[1:].flatten().reshape(1, -1) # Shape (1, 60)
-            # -------------------------------------------------------------
-
-            # 5. Apply scaler if it was loaded and used during training
+           
+            feature_vector = normalized_coords.flatten().reshape(1, -1) 
+          
             if scaler:
                  feature_vector_final = scaler.transform(feature_vector)
             else:
-                 feature_vector_final = feature_vector # Use unscaled features
+                 feature_vector_final = feature_vector 
 
             # --- Prediction ---
             prediction = ""
@@ -186,20 +158,12 @@ def process_frame(frame):
                 # Calculate the minimum count needed to meet the threshold
                 required_count = int(PREDICTION_BUFFER_SIZE * SMOOTHING_THRESHOLD)
 
-                # Check if the count of the most common prediction meets the threshold
-                # AND ensure the most common prediction is not 'Unknown' or error states
                 if counts[most_common_pred] >= required_count and most_common_pred not in ["Unknown", "Processing Error", "System Error"]:
-                    # Only update the global stable prediction if it has actually changed
                     if stable_prediction_global != most_common_pred:
-                         # print(f"New stable prediction: {most_common_pred} (Count: {counts[most_common_pred]}/{PREDICTION_BUFFER_SIZE})") # Optional debug log
                          stable_prediction_global = most_common_pred
-                    # Update the display variable for this frame to the confirmed stable prediction
                     stable_prediction_display = stable_prediction_global
                 else:
-                    # If threshold NOT met OR most common is 'Unknown'/error,
-                    # keep displaying the LAST known VALID stable prediction.
-                    # stable_prediction_global remains unchanged UNLESS it was an error state before.
-                    # Resetting to "..." if previous was error might be better?
+                   
                     if stable_prediction_global in ["Processing Error", "System Error"]:
                          stable_prediction_global = "..." # Reset if previous was error
                     stable_prediction_display = stable_prediction_global
@@ -224,11 +188,8 @@ def process_frame(frame):
          stable_prediction_display = stable_prediction_global
 
     # --- Draw Predictions on the image ---
-    # Use larger fonts and thicker lines for better visibility
-    # Display the instantaneous prediction + confidence (Top Left - Blue)
     cv2.putText(image, f"Detect: {current_prediction_display} {confidence_display}",
                 (10, 40), cv2.FONT_HERSHEY_SIMPLEX, 0.8, (255, 100, 0), 2, cv2.LINE_AA) # Blue for instant
-    # Display the stable prediction (Below Instant - Green)
     cv2.putText(image, f"Stable: {stable_prediction_display}",
                 (10, 80), cv2.FONT_HERSHEY_SIMPLEX, 1.0, (0, 255, 0), 3, cv2.LINE_AA) # Green for stable
 
@@ -304,8 +265,6 @@ def generate_frames():
 def index():
     """Serves the main Student Dashboard page."""
     print("Request received for Student Dashboard page.")
-    # Define the signs available for practice. These should match the filenames
-    # in your static/ folder (e.g., A.png, B.png)
     available_signs = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J","K", "L", "M", "N","O","P","Q","R","S","T","U", "V", "W","X", "Y","Z"] # Customize this list!
     # Render the StudentDashboard template, passing the available signs
     return render_template('StudentDashboard.html', available_signs=available_signs)
@@ -327,13 +286,9 @@ def get_prediction():
 
 # --- Main Execution ---
 if __name__ == '__main__':
-    initialize_resources() # Load model and init MediaPipe before starting server
-    if clf and hands: # Only start if resources loaded successfully
+    initialize_resources() 
+    if clf and hands: 
         print("Initialization successful. Starting Flask server...")
-        # Run the Flask app
-        # host='0.0.0.0' makes it accessible on your network
-        # threaded=True allows handling multiple requests (feed + prediction polling)
-        # use_reloader=False is often recommended when using hardware like cameras
         app.run(host='0.0.0.0', port=5000, debug=True, threaded=True, use_reloader=False)
     else:
         print("Application cannot start due to initialization errors. Check model path and MediaPipe setup.")
