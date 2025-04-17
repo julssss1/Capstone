@@ -1,0 +1,86 @@
+<!-- --- START OF FILE Admin-Subject.html --- -->
+<!-- (Recommended name: AdminSubjectManagement.html) -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Admin - Subject Management - Handspoken CAES</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../static/css/StudentDashboard.css" />
+  <link rel="stylesheet" href="../static/css/AdminSubjectManagement.css" />
+</head>
+<body>
+    <aside class="side-menu">
+        <div class="brand-logo">
+           <img src="../static/Images/caes_logo.png" alt="CAES Logo">
+            <h1>Handspoken</h1>
+            <span>CAES Admin Portal</span>
+        </div>
+        <nav class="navigation">
+             <ul>
+                <li><a href="./AdminDashboard.html">Dashboard</a></li>
+                <li><a href="./AdminUserManagement.html">User Management</a></li>
+                <li class="active"><a href="./Admin-Subject.html">Subject Management</a></li>
+                <li><a href="#">Settings</a></li>
+            </ul>
+        </nav>
+        <div class="user-info">
+             <p>Level: <strong>Admin</strong></p>
+             <a href="{{ url_for('logout') }}" class="logout-button">Logout</a>
+        </div>
+    </aside>
+
+    <main class="main-content admin-content"> 
+        <header class="page-header">
+            <h2>Subject Management</h2>
+            <p>Add, view, or manage subjects available in the platform.</p>
+        </header>
+
+        <div class="controls-header">
+        
+            <a href="{{ url_for('add_subject') }}" class="add-subject-btn">Add New Subject</a>
+        </div>
+
+        <section class="subject-list">
+           
+            {% for subject in subjects %}
+            <div class="subject-card">
+                <span>{{ subject.name }}</span>
+                <div class="subject-actions">
+                    <!-- Links would go to specific view/edit/delete routes -->
+                    <a href="{{ url_for('view_subject', subject_id=subject.id) }}" class="action-btn view">View/Manage</a>
+                    <a href="{{ url_for('edit_subject', subject_id=subject.id) }}" class="action-btn edit">Edit</a>
+                    <!-- Delete might need a form/confirmation -->
+                    <button class="action-btn delete" onclick="confirmDelete('{{ subject.id }}')">Delete</button>
+                </div>
+            </div>
+            {% else %}
+            <p>No subjects found.</p>
+            {% endfor %}
+
+            <!-- Static example if no loop is set up -->
+            <div class="subject-card">
+                <span>Example Subject: Mathematics</span>
+                <div class="subject-actions">
+                    <a href="#" class="action-btn view">View/Manage</a>
+                    <a href="#" class="action-btn edit">Edit</a>
+                    <button class="action-btn delete">Delete</button>
+                </div>
+            </div>
+             <div class="subject-card">
+                <span>Example Subject: Sign Language Basics</span>
+                 <div class="subject-actions">
+                    <a href="#" class="action-btn view">View/Manage</a>
+                    <a href="#" class="action-btn edit">Edit</a>
+                    <button class="action-btn delete">Delete</button>
+                </div>
+            </div>
+
+        </section>
+    </main>
+
+</body>
+</html>

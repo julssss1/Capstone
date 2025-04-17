@@ -1,0 +1,89 @@
+<!-- --- START OF FILE AdminDashboard.html --- -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Handspoken CAES</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../static/css/StudentDashboard.css">
+    <link rel="stylesheet" href="../static/css/AdminDashboard.css">
+</head>
+<body>
+    <aside class="side-menu">
+        <div class="brand-logo">
+           <img src="../static/Images/caes_logo.png" alt="CAES Logo">
+            <h1>Handspoken</h1>
+            <span>CAES Admin Portal</span>
+        </div>
+        <nav class="navigation">
+            <ul>
+                <!-- Add 'active' class to the current page -->
+                <li class="active"><a href="./AdminDashboard.html">Dashboard</a></li>
+                <li><a href="./AdminUserManagement.html">User Management</a></li>
+                <li><a href="./Admin-Subject.html">Subject Management</a></li>
+                <li><a href="#">Settings</a></li>
+            </ul>
+        </nav>
+        <div class="user-info">
+             <p>Level: <strong>Admin</strong></p>
+             <!-- Add Admin Name if available -->
+             <!-- <p>Welcome, [Admin Name]</p> -->
+             <a href="{{ url_for('logout') }}" class="logout-button">Logout</a>
+        </div>
+    </aside>
+
+    <main class="main-content">
+        <header class="page-header">
+            <h2>Admin Dashboard</h2>
+            <p>Overview of the Handspoken CAES platform.</p>
+        </header>
+
+        <!-- Statistics Section -->
+        <section class="dashboard-stats">
+            <div class="stat-card students">
+                <div class="card-icon">
+                    <span>👥</span> <!-- Using Emoji Icon -->
+                </div>
+                <div class="card-info">
+                    <!-- Replace with dynamic data -->
+                    <h3>{{ student_count | default('N/A') }}</h3>
+                    <span>Total Students</span>
+                </div>
+            </div>
+            <div class="stat-card teachers">
+                <div class="card-icon">
+                    <span>🧑‍🏫</span> <!-- Using Emoji Icon -->
+                </div>
+                <div class="card-info">
+                    <!-- Replace with dynamic data -->
+                     <h3>{{ teacher_count | default('N/A') }}</h3>
+                    <span>Total Teachers</span>
+                </div>
+            </div>
+            <div class="stat-card subjects">
+                 <div class="card-icon">
+                    <span>📚</span> <!-- Using Emoji Icon -->
+                </div>
+                <div class="card-info">
+                     <!-- Replace with dynamic data -->
+                     <h3>{{ subject_count | default('N/A') }}</h3>
+                    <span>Total Subjects</span>
+                </div>
+            </div>
+            <!-- Add more stat cards if needed -->
+        </section>
+
+        <!-- Optional: Recent Activity or Quick Links Section -->
+        <section class="recent-activity">
+            <h3>Recent Platform Activity</h3>
+            <!-- Add list or table of recent actions -->
+            <p>Activity log coming soon...</p>
+        </section>
+
+    </main>
+
+</body>
+</html>
