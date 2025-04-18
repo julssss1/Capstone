@@ -7,5 +7,5 @@ if hindi nag dodownload, use 12.7 python version as an interpreter
 
 use powershell and enter: Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
 
-go to terminal and enter: .\myenv\Scripts\activate
+go to terminal and enter:  .\myenv\Scripts\activate
 
